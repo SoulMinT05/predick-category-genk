@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kiểm tra dự đoán phân loại</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="mt-5">Text Category Prediction</h1>
+            <form id="predictionForm" class="mt-4">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" name="title" required />
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="description" name="description" required></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="predictCategory()">Dự đoán</button>
+            </form>
+
+            <h2 class="mt-5">Kết quả dự đoán:</h2>
+            <div id="result"></div>
+        </div>
+
+        <script>
+            function predictCategory() {
+                const title = document.getElementById('title').value.trim();
+                const description = document.getElementById('description').value.trim();
+                console.log('title: ', title);
+                console.log('description: ', description);
+
+                if (!title || !description) {
+                    alert('Nhập đầy đủ title và description.');
+                    return; // Dừng lại nếu một trong hai trường rỗng
+                }
+
+                fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ title, description }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById('result').innerText = `Predicted Category: ${data.category}`;
+                    })
+                    .catch((error) => console.error('Error:', error));
+            }
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>
