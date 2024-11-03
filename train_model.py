@@ -8,6 +8,8 @@ import numpy as np
 import pickle
 
 # Đọc dữ liệu từ file CSV
+
+
 file_path = "./data_combined_5_not-tinIcgt.csv"  # Thay bằng tên file CSV của bạn
 category_data = pd.read_csv(file_path)
 category_data.head()
