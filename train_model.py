@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, accuracy_score
 import numpy as np
 import pickle
@@ -39,21 +40,52 @@ X_tfidf = vectorizer.fit_transform(X)
 # Chia dữ liệu thành tập train và test
 X_train, X_test, y_train, y_test = train_test_split(X_tfidf, y, test_size=0.2, random_state=42)
 
-# Huấn luyện mô hình Naive Bayes
-model = MultinomialNB()
+# Train Bayesian
+# model = MultinomialNB()
+# model.fit(X_train, y_train)
+
+# # Dự đoán trên tập train và test
+# y_train_pred = model.predict(X_train)
+# train_accuracy = accuracy_score(y_train, y_train_pred)
+# y_test_pred = model.predict(X_test)
+# test_accuracy = accuracy_score(y_test, y_test_pred)
+
+# # In độ chính xác trên tập train và test
+# print(f'Train Accuracy: {train_accuracy:.4f}')
+# print(f'Test Accuracy: {test_accuracy:.4f}')
+
+# # In classification report cho tập test
+# print("\nClassification Report (Test Data):")
+# print(classification_report(y_test, y_test_pred))
+
+# with open('model.pkl', 'wb') as model_file:
+#     pickle.dump(model, model_file)
+
+# with open('vectorizer.pkl', 'wb') as vectorizer_file:
+#     pickle.dump(vectorizer, vectorizer_file)
+
+
+
+
+# Train Logistic Regression
+model = LogisticRegression(max_iter=1000)
+
+# Fit voi du lieu trian
 model.fit(X_train, y_train)
 
-# Dự đoán trên tập train và test
+# Dự đoán trên tập train
 y_train_pred = model.predict(X_train)
 train_accuracy = accuracy_score(y_train, y_train_pred)
+
+# Dự đoán trên tập test
 y_test_pred = model.predict(X_test)
 test_accuracy = accuracy_score(y_test, y_test_pred)
 
-# In độ chính xác trên tập train và test
+# In ra độ chính xác trên tập train và test
 print(f'Train Accuracy: {train_accuracy:.4f}')
 print(f'Test Accuracy: {test_accuracy:.4f}')
 
-# In classification report cho tập test
+# In ra classification report cho tập test
 print("\nClassification Report (Test Data):")
 print(classification_report(y_test, y_test_pred))
 

@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="container">
-            <h1 class="mt-5">Text Category Prediction</h1>
+            <h1 class="mt-5">Dự đoán nhãn</h1>
             <form id="predictionForm" class="mt-4">
                 <div class="form-group">
                     <label for="title">Title:</label>
@@ -34,7 +34,7 @@
 
                 if (!title || !description) {
                     alert('Nhập đầy đủ title và description.');
-                    return; // Dừng lại nếu một trong hai trường rỗng
+                    return;
                 }
 
                 fetch('/predict', {
